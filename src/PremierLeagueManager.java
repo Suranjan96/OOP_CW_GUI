@@ -99,7 +99,7 @@ public class PremierLeagueManager implements LeagueManager  {
             System.out.println("\nTable of Matches:-");
             String leftAlignFormats = "| %-15s | %-15s | %-12s | %-15s |%n";
             System.out.format("+-----------------+-----------------+--------------+-----------------+%n");
-            System.out.format("|  Date           |  Away Team      |  Results     |  Home Team      | %n");
+            System.out.format("|  Date           |  Home Team      |  Results     |  Away Team      | %n");
             System.out.format("+-----------------+-----------------+--------------+-----------------+%n");
             for (int x = 0; x< matches.size(); x++){
                 System.out.printf(leftAlignFormats,((FootBallClub) matches.get(x)).getDate(), matches.get(x).getClubName1(),"  "+

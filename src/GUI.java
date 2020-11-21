@@ -83,7 +83,7 @@ public class GUI extends Application {
                 "-fx-background-position: center center;");
         mainLayout.getChildren().addAll(label,btnRanking, btnMatches,btnCloseWin);      // 3 buttons add to main window layout
         mainScene = new Scene(mainLayout,500,500);
-
+        primaryStage.setResizable(false);
         primaryStage.setScene(mainScene);
         primaryStage.show();
 
@@ -225,6 +225,7 @@ public class GUI extends Application {
                 });
 
        scene = new Scene(pane, 1000, 800);
+       stage.setResizable(false);
        stage.setScene(scene);
        stage.show();
 
@@ -236,33 +237,46 @@ public class GUI extends Application {
         Scene scene;
 
         Pane pane = new Pane();
-        pane.setStyle("-fx-background-image: url(img2.jpg);"+"-fx-background-repeat: stretch;"+
-                "-fx-background-size: 1000 800;"+
-                "-fx-background-position: center center;");
+        pane.setStyle("-fx-background-image: url(img2.jpg);"+"-fx-background-repeat: stretch;"+ "-fx-background-size: 1000 800;"+ "-fx-background-position: center center;");
         Label label;
         pane.getChildren().add(label = new Label("Table of Matches"));
         label.setTextFill(Color.web("#ffffff", 1));
         Font font = Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30);
         label.setFont(font);
-        //label.setFont(Font.font(58));
         label.setPrefHeight(115);
         label.setPrefWidth(529);
         label.setLayoutX(40);
         label.setLayoutY(15);
 
+        final DatePicker datePicker = new DatePicker();
+        // Make the DatePicker non-editable
+        datePicker.setEditable(false);
+        datePicker.setPrefHeight(50);
+        datePicker.setPrefWidth(150);
+        datePicker.setLayoutX(750);
+        datePicker.setLayoutY(25);
+        datePicker.setStyle("-fx-font-size: 16;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
+        pane.getChildren().add(datePicker);
+        // Print the new date in the TextArea
+        datePicker.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                LocalDate date = datePicker.getValue();
+                System.out.println("Selected date: " + date);
+            }
+        });
 
 
-        //SportClub playedMatch1 = new FootBallClub("","","","",0,0,0,0,0,0,0,0,date.toString());   //pass the matches details to the constructor
-        //PremierLeagueManager.matches.add(playedMatch1);
 
 
 
-        //PremierLeagueManager.premierLeague.sort(Collections.reverseOrder());
         TableView<SportClub> table = new TableView<SportClub>();
         final ObservableList<SportClub> data1 = FXCollections.observableArrayList(PremierLeagueManager.matches);
-       //final ObservableList<SportClub> data2 = FXCollections.observableArrayList(PremierLeagueManager.matches2);
 
         TableColumn date1 = new TableColumn("Date");
+        table.refresh();
         date1.setCellValueFactory(new PropertyValueFactory("date"));
         date1.setPrefWidth(160);
         date1.setStyle( "-fx-alignment: CENTER;");
@@ -300,8 +314,6 @@ public class GUI extends Application {
 
         //Adding data to the table
         ObservableList<String> list = FXCollections.observableArrayList();
-
-
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         table.getColumns().addAll(date1, home_team, results, away_team);
 
@@ -309,10 +321,9 @@ public class GUI extends Application {
         table.setFixedCellSize(40);
         table.setMaxSize(820, 400);
         table.setItems(data1);
-        //table.setItems(data2);
+
         VBox vbox;
         pane.getChildren().add(vbox = new VBox());
-
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 50, 50, 60));
         vbox.getChildren().addAll(label, table);
@@ -324,7 +335,15 @@ public class GUI extends Application {
         random.setLayoutX(500);
         random.setLayoutY(25);
         random.setStyle("-fx-font-size: 20;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
-        //btnOption1.setStyle("-fx-background-color:#1a6ebf");
+        random.setOnAction(event -> {
+            try {
+                Main.random();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stage.close();
+            matchTable();
+        });
 
         Button btnOption2;
         pane.getChildren().add(btnOption2 = new Button("Home"));
@@ -333,7 +352,6 @@ public class GUI extends Application {
         btnOption2.setLayoutX(500);
         btnOption2.setLayoutY(600);
         btnOption2.setStyle("-fx-font-size: 20;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
-        //btnOption1.setStyle("-fx-background-color:#1a6ebf");
         btnOption2.setOnAction(event -> {
             stage.close();
             mainPage();
@@ -346,31 +364,17 @@ public class GUI extends Application {
         exit.setLayoutX(750);
         exit.setLayoutY(600);
         exit.setStyle("-fx-font-size: 20;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
-        //exit.setStyle("-fx-background-color:#bf1a2d");
         exit.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 event -> {
                     stage.close();
                 });
 
         scene = new Scene(pane, 1000, 800);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
 
-    public void randomButton() throws IOException {
-        /*Random rand = new Random();
-        SportClub obj=null ;
-        PremierLeagueManager name = new PremierLeagueManager();
-        String clubName1 = PremierLeagueManager.matches1.get(obj.getClubName().rand.next(PremierLeagueManager.matches1.size()));
-
-        int score1 = rand.nextInt(16);
-        int score2 = rand.nextInt(16);
-
-        SportClub playedMatch1 = new FootBallClub(clubName1,"","",0,0,0,0,score1,0,0,0,date);   //pass the matches details to the constructor
-        SportClub playedMatch2 = new FootBallClub(clubName2,"","",0,0,0,0,score2,0,0,0,date);
-
-        premierLeagueManager.addPlayedMatch(playedMatch1,playedMatch2);*/
-    }
 
     public void searchDate(){
 
