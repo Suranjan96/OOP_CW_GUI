@@ -4,10 +4,9 @@ import java.util.*;
 public class PremierLeagueManager implements LeagueManager  {
     public static List<SportClub> premierLeague = new ArrayList<>() ;
     public static List<SportClub> matches = new ArrayList<>();
-   public static List<String> clubName = new ArrayList<>();
 
     @Override
-    public void createNewClub(SportClub footBallClub) throws IOException {
+    public void createNewClub(SportClub footBallClub)  {
         premierLeague.add(footBallClub);
         System.out.println("\nNumber of club registered: "+premierLeague.size());
         System.out.println("Number of free slots : "+(20-premierLeague.size()));
@@ -16,34 +15,31 @@ public class PremierLeagueManager implements LeagueManager  {
 
     @Override
     public void deleteClub() {
-        if(PremierLeagueManager.premierLeague.size()>=2) {
+        if(PremierLeagueManager.premierLeague.size()==20) {  //TODO update
             premierLeague.sort(Collections.reverseOrder());    //https://stackoverflow.com/questions/61224776/reason-no-instances-of-type-variables-t-exist-so-that-int-conforms-to-t
             //delete the last object from arraylist
+            System.out.println("Relegated clubs are:- ");
+            String leftAlignFormat = "| %-15s | %-6d | %-4d | %-6d | %-5d | %-5d | %-5d | %-5d | %-6d |%n";         //https://stackoverflow.com/questions/15215326/how-can-i-create-table-using-ascii-in-a-console
+            System.out.format("+-----------------+--------+------+--------+-------+-------+-------+-------+--------+%n");
+            System.out.format("| Club name       | Played | Won  | Drawn  | Lost  |  GF   |  GA   |  GD   |Points  | %n");
+            System.out.format("+-----------------+--------+------+--------+-------+-------+-------+-------+--------+%n");
+            for (int x = 1; x <= 3; x++) {
+                SportClub footBallClub2 = premierLeague.get(premierLeague.size() - 1);
+                System.out.format(leftAlignFormat, footBallClub2.getClubName1(), ((FootBallClub) footBallClub2).getNoOfMatches(), ((FootBallClub) footBallClub2).getWins(),
+                        ((FootBallClub) footBallClub2).getDraws(), ((FootBallClub) footBallClub2).getDefeats(), ((FootBallClub) footBallClub2).getScored(),
+                        ((FootBallClub) footBallClub2).getNoOfGoals(), ((FootBallClub) footBallClub2).getGoalDifference(), ((FootBallClub) footBallClub2).getNoOfPoints());
 
-            SportClub footBallClub = premierLeague.get(premierLeague.size()-1);
-            System.out.println("Last"+footBallClub.getClubName1() +"club has been successfully deleted!!!");
-            System.out.println("> Founded Year      : " + footBallClub.getFoundedYear());
-            System.out.println("> Location          : " + footBallClub.getLocation());
-            System.out.println("> Number of Matches : " + ((FootBallClub) footBallClub).getNoOfMatches());
-            System.out.println("> Wins              : " + ((FootBallClub) footBallClub).getWins());
-            System.out.println("> Draws             : " + ((FootBallClub) footBallClub).getDraws());
-            System.out.println("> Lost              : " + ((FootBallClub) footBallClub).getDefeats());
-            System.out.println("> Number of Goals   : " + ((FootBallClub) footBallClub).getNoOfGoals());
-            System.out.println("> Scored            : " + ((FootBallClub) footBallClub).getScored());
-            System.out.println("> Goal Difference   : " + ((FootBallClub) footBallClub).getGoalDifference());
-            System.out.println("> Number of Points  : " + ((FootBallClub) footBallClub).getNoOfPoints());
-
-            premierLeague.remove(premierLeague.size() - 1);
-            System.out.println("\nNumber of club registered: "+premierLeague.size());
-            System.out.println("Number of free slots : "+(20-premierLeague.size()));
+                premierLeague.remove(premierLeague.size() - 1);
+            }
+            System.out.format("+-----------------+--------+------+--------+-------+-------+-------+-------+--------+%n");
         }
         else {
-            System.out.println("There are no football clubs to delete!");
+            System.out.println("There are no 20 football clubs to relegate!");
         }
     }
 
     @Override
-    public void displayStatistics(String clubName) throws IOException {
+    public void displayStatistics(String clubName)  {
         if (premierLeague.size() >= 1) {
             boolean nameCheck = false;
             do {
@@ -114,10 +110,8 @@ public class PremierLeagueManager implements LeagueManager  {
     }
 
     @Override
-    public void addPlayedMatch(SportClub playedMatch1) throws IOException  {
-
+    public void addPlayedMatch(SportClub playedMatch1)  {
         matches.add(playedMatch1);      //add team name, score and date to the marches1 arraylist
-        //matches2.add(Main.playedMatches,playedMatch2);      //add team name, score and date to the marches2 arraylist
     }
 
     @Override

@@ -23,12 +23,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 
 public class GUI extends Application {
-    private final static PremierLeagueManager premierLeagueManager = new PremierLeagueManager();
-    private Stage stage;
-    private DatePicker checkInDatePicker;
-    private final String pattern = "yyyy-MM-dd";
-
-
+    private final static Wins wins = new Wins();
     public static void main(String[] args) {
         launch(args);
     }
@@ -38,6 +33,7 @@ public class GUI extends Application {
         mainPage();
 
     }
+
     public void mainPage(){
         Stage primaryStage = new Stage();
         primaryStage.setTitle("Premier League");
@@ -99,7 +95,7 @@ public class GUI extends Application {
         });
     }
 
-   public void rankingTable() {
+    public void rankingTable() {
         Stage stage = new Stage();
         stage.setTitle("Premier League Ranking Table");
         Scene scene;
@@ -224,6 +220,61 @@ public class GUI extends Application {
                     stage.close();
                 });
 
+        Label label1;
+        pane.getChildren().add(label1 = new Label("Sort by:-"));
+        label1.setTextFill(Color.web("#ffffff", 1));
+        Font font1 = Font.font("verdana", FontWeight.BOLD, 22);
+        label1.setFont(font1);
+        label1.setPrefHeight(30);
+        label1.setPrefWidth(150);
+        label1.setLayoutX(40);
+        label1.setLayoutY(600);
+
+        Button sortWon;
+        pane.getChildren().add(sortWon = new Button("Won"));
+        sortWon.setPrefHeight(10);
+        sortWon.setPrefWidth(80);
+        sortWon.setLayoutX(40);
+        sortWon.setLayoutY(650);
+        sortWon.setStyle("-fx-font-size: 16;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
+
+        sortWon.setOnAction(event -> {
+            PremierLeagueManager.premierLeague.sort(Collections.reverseOrder());
+            //wins.compare();
+            //table.setItems();
+
+        });
+
+        Button sortGF;
+        pane.getChildren().add(sortGF = new Button("GF"));
+        sortGF.setPrefHeight(10);
+        sortGF.setPrefWidth(80);
+        sortGF.setLayoutX(40);
+        sortGF.setLayoutY(700);
+        sortGF.setStyle("-fx-font-size: 16;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
+
+        sortGF.setOnAction(event -> {
+            PremierLeagueManager.premierLeague.sort(Collections.reverseOrder());
+            //wins.compare();
+            //table.setItems();
+
+        });
+
+        Button sortPoint;
+        pane.getChildren().add(sortPoint = new Button("Points"));
+        sortPoint.setPrefHeight(10);
+        sortPoint.setPrefWidth(80);
+        sortPoint.setLayoutX(40);
+        sortPoint.setLayoutY(750);
+        sortPoint.setStyle("-fx-font-size: 16;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
+
+        sortPoint.setOnAction(event -> {
+            PremierLeagueManager.premierLeague.sort(Collections.reverseOrder());
+            //wins.compare();
+            //table.setItems();
+
+        });
+
        scene = new Scene(pane, 1000, 800);
        stage.setResizable(false);
        stage.setScene(scene);
@@ -248,7 +299,7 @@ public class GUI extends Application {
         label.setLayoutX(40);
         label.setLayoutY(15);
 
-        final DatePicker datePicker = new DatePicker();
+        /*final DatePicker datePicker = new DatePicker();
         // Make the DatePicker non-editable
         datePicker.setEditable(false);
         datePicker.setPrefHeight(50);
@@ -257,20 +308,7 @@ public class GUI extends Application {
         datePicker.setLayoutY(25);
         datePicker.setStyle("-fx-font-size: 16;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
         pane.getChildren().add(datePicker);
-        // Print the new date in the TextArea
-        datePicker.setOnAction(new EventHandler<ActionEvent>()
-        {
-            @Override
-            public void handle(ActionEvent event)
-            {
-                LocalDate date = datePicker.getValue();
-                System.out.println("Selected date: " + date);
-            }
-        });
-
-
-
-
+        // Print the new date in the TextArea*/
 
         TableView<SportClub> table = new TableView<SportClub>();
         final ObservableList<SportClub> data1 = FXCollections.observableArrayList(PremierLeagueManager.matches);
@@ -336,11 +374,7 @@ public class GUI extends Application {
         random.setLayoutY(25);
         random.setStyle("-fx-font-size: 20;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
         random.setOnAction(event -> {
-            try {
-                Main.random();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Main.random();
             stage.close();
             matchTable();
         });
@@ -366,7 +400,7 @@ public class GUI extends Application {
         exit.setStyle("-fx-font-size: 20;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
         exit.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 event -> {
-                    stage.close();
+            stage.close();
                 });
 
         scene = new Scene(pane, 1000, 800);
@@ -374,7 +408,6 @@ public class GUI extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
 
     public void searchDate(){
 

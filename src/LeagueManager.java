@@ -1,11 +1,9 @@
-import java.io.IOException;
-
 public interface LeagueManager {
-    void createNewClub(SportClub footBallClub) throws IOException;
+    void createNewClub(SportClub footBallClub) ;
     void deleteClub();
-    void displayStatistics(String clubName) throws IOException;
+    void displayStatistics(String clubName) ;
     void displayLeagueTable();
-    void addPlayedMatch(SportClub playedMatch1) throws IOException;
+    void addPlayedMatch(SportClub playedMatch1);
     void saveInformation();
     void loadInformation();
 

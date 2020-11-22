@@ -1,8 +1,10 @@
 import javafx.application.Application;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
     private final static PremierLeagueManager premierLeagueManager = new PremierLeagueManager();
@@ -77,7 +79,7 @@ public class Main {
                     Application.launch(GUI.class);
                     System.exit(0);
                     break;
-                case "8":
+                case"8":
                     random();
                     break;
                 case "Q":
@@ -89,7 +91,7 @@ public class Main {
         }
     }
 
-    private static void createNewFootBallClub() throws IOException{
+    private static void createNewFootBallClub()  {
         if (PremierLeagueManager.premierLeague.size()<=19){
             boolean nameCheck=false;
             Scanner input = new Scanner(System.in);
@@ -130,7 +132,7 @@ public class Main {
         }
     }
 
-    private static void addPlayedMatch() throws IOException{
+    private static void addPlayedMatch()  {
         if (PremierLeagueManager.premierLeague.size() >= 2) {
             boolean nameCheck = false,scoredBoolean,dateCheck=false;
             playedMatches++;
@@ -289,32 +291,39 @@ public class Main {
         }
     }
 
-    public static void random() throws IOException{
+    public static void random()  {
         boolean nameCheck = false;
         if ((PremierLeagueManager.premierLeague.size()-1)*(PremierLeagueManager.premierLeague.size())>(PremierLeagueManager.matches.size())) {
             do {
                 Random rand = new Random();
                 SportClub randTest1 = PremierLeagueManager.premierLeague.get(rand.nextInt(PremierLeagueManager.premierLeague.size()));
                 SportClub randTest2 = PremierLeagueManager.premierLeague.get(rand.nextInt(PremierLeagueManager.premierLeague.size()));
-                //System.out.println(randTest.getClubName1());
                 clubName1 = randTest1.getClubName1();
                 clubName2 = randTest2.getClubName1();
                 if (!clubName1.equalsIgnoreCase(clubName2)) {
                     for (SportClub footBallClub : PremierLeagueManager.matches) {
                         if ((clubName1.equalsIgnoreCase((footBallClub).getClubName1())) && (clubName2.equalsIgnoreCase((footBallClub).getClubName2()))) {
                             nameCheck = false;
-                            //System.out.println("Duplicate matches");
                             break;
                         } else {
                             nameCheck = true;
                         }
                     }
                 } else {
-                    //System.out.println("Duplicate club name");
                     nameCheck = false;
                 }
+            }while (!nameCheck);
 
-        }while (!nameCheck);
+            LocalDate startDate = LocalDate.of(2020, 8, 1); //start date            https://stackoverflow.com/questions/40253332/generating-random-date-in-a-specific-range-in-java/40253420
+            long start = startDate.toEpochDay();
+
+            LocalDate endDate = LocalDate.of(2021,5,30); //end date
+            long end = endDate.toEpochDay();
+
+            long randomEpochDay = ThreadLocalRandom.current().longs(start, end).findAny().getAsLong();
+            String date = String.valueOf(LocalDate.ofEpochDay(randomEpochDay));
+            //System.out.println(date);
+
 
             Random randScore = new Random();
             team1Scored = randScore.nextInt(15);

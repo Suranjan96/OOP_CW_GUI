@@ -1,6 +1,4 @@
-import java.text.SimpleDateFormat;
 import java.util.Comparator;
-import java.util.Date;
 
 public  class FootBallClub extends SportClub implements Comparable<FootBallClub> {
     private int wins;
@@ -12,8 +10,6 @@ public  class FootBallClub extends SportClub implements Comparable<FootBallClub>
     private int noOfMatches;
     private int goalDifference;
     private String date;
-    //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MMM-dd");
-
 
     public FootBallClub(String clubName1, String clubName2, String location, String foundedYear, int wins, int draws, int defeats, int noOfGoals, int scored, int noOfPoints, int noOfMatches, int goalDifference, String date) {
         super(clubName1, clubName2, location, foundedYear);
