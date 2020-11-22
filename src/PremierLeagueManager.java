@@ -15,7 +15,7 @@ public class PremierLeagueManager implements LeagueManager  {
 
     @Override
     public void deleteClub() {
-        if(PremierLeagueManager.premierLeague.size()==20) {  //TODO update
+        if(PremierLeagueManager.premierLeague.size()==20) {
             premierLeague.sort(Collections.reverseOrder());    //https://stackoverflow.com/questions/61224776/reason-no-instances-of-type-variables-t-exist-so-that-int-conforms-to-t
             //delete the last object from arraylist
             System.out.println("Relegated clubs are:- ");
@@ -137,7 +137,6 @@ public class PremierLeagueManager implements LeagueManager  {
             ObjectInputStream in = new ObjectInputStream(fileIn);
             premierLeague = (ArrayList) in.readObject();                //Deserialize list of objects
             matches = (ArrayList) in.readObject();
-            //matches2 = (ArrayList) in.readObject();
             in.close();
             fileIn.close();
             System.out.println("Data has been successfully loaded!\n");
@@ -149,6 +148,10 @@ public class PremierLeagueManager implements LeagueManager  {
             c.printStackTrace();
             return;
         }
+    }
+
+    public void check(){
+
     }
 
 

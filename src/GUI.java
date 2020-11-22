@@ -1,6 +1,7 @@
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -20,10 +21,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class GUI extends Application {
     private final static Wins wins = new Wins();
+    private final static PremierLeagueManager premierLeagueManager = new PremierLeagueManager();
     public static void main(String[] args) {
         launch(args);
     }
@@ -116,7 +120,6 @@ public class GUI extends Application {
         label.setLayoutX(40);
         label.setLayoutY(15);
 
-        PremierLeagueManager.premierLeague.sort(Collections.reverseOrder());
         TableView<SportClub> table = new TableView<SportClub>();
         final ObservableList<SportClub> data = FXCollections.observableArrayList(PremierLeagueManager.premierLeague);
 
@@ -138,6 +141,7 @@ public class GUI extends Application {
 
         TableColumn won = new TableColumn(" Won ");
         won.setCellValueFactory(new PropertyValueFactory("wins"));
+        won.setSortable(false);
         won.setPrefWidth(90);
        won.setStyle( "-fx-alignment: CENTER;");
 
@@ -155,6 +159,7 @@ public class GUI extends Application {
 
         TableColumn goalFor = new TableColumn(" GF ");
         goalFor.setCellValueFactory(new PropertyValueFactory("scored"));
+        goalFor.setSortable(false);
         goalFor.setPrefWidth(85);
        goalFor.setStyle( "-fx-alignment: CENTER;");
 
@@ -172,19 +177,19 @@ public class GUI extends Application {
 
         TableColumn points = new TableColumn("Points");
         points.setCellValueFactory(new PropertyValueFactory("noOfPoints"));
+        points.setSortable(false);
         points.setPrefWidth(90);
         points.setStyle( "-fx-alignment: CENTER;");
 
 
         //Adding data to the table
-       ObservableList<String> list = FXCollections.observableArrayList();
+       //ObservableList<String> list = FXCollections.observableArrayList();
        table.setItems(data);
        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
        table.getColumns().addAll(name, played, won, drawn, lost, goalFor, goalAgainst, gaolDiffernce, points);
 
         //Setting the size of the table
-       //table.setStyle(" . table-row-cell {-fx-cell-size: 50px;}");
-       table.setFixedCellSize(40);
+        table.setFixedCellSize(40);
         table.setMaxSize(866, 400);
 
         VBox vbox;
@@ -202,7 +207,6 @@ public class GUI extends Application {
         btnOption1.setLayoutY(600);
         btnOption1.setStyle("-fx-font-size: 20;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
 
-        //btnOption1.setStyle("-fx-background-color:#1a6ebf");
         btnOption1.setOnAction(event -> {
             stage.close();
             mainPage();
@@ -214,7 +218,7 @@ public class GUI extends Application {
         exit.setLayoutX(750);
         exit.setLayoutY(600);
         exit.setStyle("-fx-font-size: 20;"+"-fx-font-weight: bold;"+"-fx-alignment: center;"+"-fx-background-radius: 50px;");
-        //exit.setStyle("-fx-background-color:#bf1a2d");
+
         exit.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 event -> {
                     stage.close();
@@ -240,9 +244,10 @@ public class GUI extends Application {
 
         sortWon.setOnAction(event -> {
             PremierLeagueManager.premierLeague.sort(Collections.reverseOrder());
-            //wins.compare();
-            //table.setItems();
-
+           /* List list1 = Arrays.asList(PremierLeagueManager.premierLeague);
+            Collections.sort(list1,new Score());*/
+            stage.close();
+            rankingTable();
         });
 
         Button sortGF;
@@ -254,9 +259,15 @@ public class GUI extends Application {
         sortGF.setStyle("-fx-font-size: 16;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
 
         sortGF.setOnAction(event -> {
-            PremierLeagueManager.premierLeague.sort(Collections.reverseOrder());
-            //wins.compare();
-            //table.setItems();
+            Collections.sort(PremierLeagueManager.premierLeague,new Score());
+
+            /*List list1 = Arrays.asList(PremierLeagueManager.premierLeague);
+            Collections.sort(list1,new Score());
+            for (SportClub a : PremierLeagueManager.premierLeague){
+                System.out.println(((FootBallClub)a).getScored());
+            }*/
+            stage.close();
+            rankingTable();
 
         });
 
@@ -270,8 +281,10 @@ public class GUI extends Application {
 
         sortPoint.setOnAction(event -> {
             PremierLeagueManager.premierLeague.sort(Collections.reverseOrder());
-            //wins.compare();
-            //table.setItems();
+            /*List list1 = Arrays.asList(PremierLeagueManager.premierLeague);
+            Collections.sort(list1,new Score());*/
+            stage.close();
+            rankingTable();
 
         });
 
@@ -298,6 +311,10 @@ public class GUI extends Application {
         label.setPrefWidth(529);
         label.setLayoutX(40);
         label.setLayoutY(15);
+
+        ChoiceBox<String> choiceBox = new ChoiceBox();
+        choiceBox.getItems().addAll("Date", "Home Team","Away Team");
+        choiceBox.setValue("Date");
 
         /*final DatePicker datePicker = new DatePicker();
         // Make the DatePicker non-editable
@@ -351,7 +368,7 @@ public class GUI extends Application {
         away_team.setStyle( "-fx-alignment: CENTER;");
 
         //Adding data to the table
-        ObservableList<String> list = FXCollections.observableArrayList();
+       // ObservableList<String> list = FXCollections.observableArrayList();
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         table.getColumns().addAll(date1, home_team, results, away_team);
 
@@ -360,11 +377,44 @@ public class GUI extends Application {
         table.setMaxSize(820, 400);
         table.setItems(data1);
 
+        FilteredList<SportClub> clubs = new FilteredList(data1, p -> true);         //https://stackoverflow.com/questions/47559491/making-a-search-bar-in-javafx
+        (table).setItems(clubs);
+        TextField textfield = new TextField();
+        textfield.setPromptText("Search here!");
+        textfield.setOnKeyReleased(keyEvent ->
+        {
+            switch (choiceBox.getValue())//Switch on choiceBox value
+            {
+                case "Date":
+                    (clubs).setPredicate(search -> ((FootBallClub)search).getDate().toLowerCase().contains(textfield.getText().toLowerCase().trim()));
+                    break;
+                case "Home Team":
+                    clubs.setPredicate(search -> search.getClubName1().toLowerCase().contains(textfield.getText().toLowerCase().trim()));
+                    break;
+                case "Away Team":
+                    clubs.setPredicate(search -> search.getClubName2().toLowerCase().contains(textfield.getText().toLowerCase().trim()));
+                    break;
+            }
+        });
+
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
+        {//reset table and textfield when new choice is selected
+            if (newVal != null) {
+                textfield.setText("");
+                clubs.setPredicate(null);//This is same as saying member.setPredicate(p->true);
+            }
+        });
+
+        HBox hBox1;
+        pane.getChildren().add(hBox1 = new HBox());
+        hBox1.setSpacing(10);
+        hBox1.getChildren().addAll(choiceBox,textfield);
+
         VBox vbox;
         pane.getChildren().add(vbox = new VBox());
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 50, 50, 60));
-        vbox.getChildren().addAll(label, table);
+        vbox.getChildren().addAll(label,hBox1,table);
 
         Button random;
         pane.getChildren().add(random = new Button("Let's Play"));
