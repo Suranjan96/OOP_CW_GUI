@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class Score implements Comparator<SportClub> {
+public class ScoreSort implements Comparator<SportClub> {
 
     public int compare(SportClub score1,SportClub score2){
         int compareScore1 = ((FootBallClub)score1).getScored();

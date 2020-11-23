@@ -2,8 +2,6 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -19,15 +17,9 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 public class GUI extends Application {
-
-    private boolean True;
 
     public static void main(String[] args) {
         launch(args);
@@ -243,7 +235,7 @@ public class GUI extends Application {
         sortWon.setStyle("-fx-font-size: 16;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
 
         sortWon.setOnAction(event -> {
-           Collections.sort(PremierLeagueManager.premierLeague,new Wins());
+           Collections.sort(PremierLeagueManager.premierLeague,new WinsSort());
            stage.close();
            rankingTable();
         });
@@ -257,7 +249,7 @@ public class GUI extends Application {
         sortGF.setStyle("-fx-font-size: 16;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
 
         sortGF.setOnAction(event -> {
-            Collections.sort(PremierLeagueManager.premierLeague,new Score());
+            Collections.sort(PremierLeagueManager.premierLeague,new ScoreSort());
             stage.close();
             rankingTable();
 

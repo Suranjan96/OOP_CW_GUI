@@ -1,6 +1,5 @@
 import javafx.application.Application;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Random;
 import java.util.Scanner;
@@ -43,7 +42,7 @@ public class Main {
             System.out.println("");
             System.out.println("|----------------------------MENU BAR-------------------------|");
             System.out.println("|'1'- Create new football club                                |");
-            System.out.println("|'2'- Delete an existing club                                 |");
+            System.out.println("|'2'- Relegate an existing clubs                              |");
             System.out.println("|'3'- Display the various statistics for a selected club      |");
             System.out.println("|'4'- Display the Premier League Table                        |");
             System.out.println("|'5'- Add a played match with its score and its date          |");
@@ -77,9 +76,6 @@ public class Main {
                     Application.launch(GUI.class);
                     System.exit(0);
                     break;
-                case"8":
-                    random();
-                    break;
                 case "Q":
                 case "q":
                     break menu;
@@ -95,14 +91,14 @@ public class Main {
             Scanner input = new Scanner(System.in);
 
             do {
-                System.out.print("1. Name of your club : ");
+                System.out.print("1. Name of your club : ");       //enter club name
                 clubName1 = input.next();
                 nameCheck = SportClub.clubChecker(clubName1);
             } while (!nameCheck);
 
 
             do {
-                System.out.print("2. Enter your location : ");
+                System.out.print("2. Enter your location : ");      //enter their location
                 location = input.next();
                 if ((location != null) && (location.matches("^[a-zA-Z]*$"))) {     //location validation
                     break;
@@ -111,7 +107,7 @@ public class Main {
             } while (!nameCheck);
 
             do {
-                System.out.print("3. Enter your founded year : ");
+                System.out.print("3. Enter your founded year : ");          //enter the founded year
                 foundedYear = input.next();
                 if ((foundedYear != null)  && (foundedYear.matches("^[0-2]|[8-9]|[0-9]|[0-9]*$"))) {     //year validation
                     break;
@@ -119,11 +115,9 @@ public class Main {
                 System.out.println("Invalid input..... please try again");
             } while (!nameCheck);
 
-            System.out.println("\nSuccessfully "+clubName1 +" club added to the Premier League");
+            System.out.println("\nSuccessfully "+clubName1 +" club added to the Premier League");     //prompt message
             SportClub footballClub = new FootBallClub(clubName1,"",location,foundedYear,0,0,0,0,0,0,0,0,"");   //pass data to the constructor
-            //footballClub = new FootBallClub(clubName,location,foundedYear,wins,draws,defeats,noOfGoals,scored,noOfPoints,playedMatches,date);
-            //teams+=1;
-            premierLeagueManager.createNewClub(footballClub);
+            premierLeagueManager.createNewClub(footballClub);    //call to the create method in premier league class
 
         }else if(PremierLeagueManager.premierLeague.size()==20) {      //maximum length is 20
             System.out.println("No free slots are available to register!");
@@ -131,15 +125,15 @@ public class Main {
     }
 
     private static void addPlayedMatch()  {
-        if (PremierLeagueManager.premierLeague.size() >= 2) {
+        if (PremierLeagueManager.premierLeague.size() >= 2) {     //at least their should be 2 clubs to play match
             boolean nameCheck = false,scoredBoolean,dateCheck=false;
-            playedMatches++;
+            playedMatches++;                            //counting number of matches played
             do {
                 Scanner input1 = new Scanner(System.in);
-                System.out.print("Enter the date (YYYY-MM-DD) : ");
+                System.out.print("Enter the date (YYYY-MM-DD) : ");    //enter played date
                 date = input1.next();
                 if ((date != null) && (!date.equals("")) && (date.matches("^(19|20)\\d\\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$"))) {   https://www.regular-expressions.info/dates.html#:~:text=To%20match%20a%20date%20in,%5D)%5B%2D%20%2F.%5D
-                    break;
+                    break;                          //validating date using regex
                 }
                 System.out.println("Invalid input..... please try again\n");
             } while (!dateCheck);
@@ -160,7 +154,7 @@ public class Main {
                         }
                         a++;
                     }
-                    if (!nameCheck) {
+                    if (!nameCheck) {               //checking that name is available or not
                         System.out.println("Not found!");
                         nameCheck = false;
                     }
@@ -186,7 +180,7 @@ public class Main {
                             nameCheck = false;
                         }
                     } else {
-                        System.out.println("Duplicate club name");
+                        System.out.println("Duplicate club name");          //prompt message when user enter same name for second club
                         nameCheck = false;
                     }
                 } while (!nameCheck);
@@ -194,7 +188,7 @@ public class Main {
                 for (SportClub footBallClub : PremierLeagueManager.matches) {
                     if ((clubName1.equalsIgnoreCase((footBallClub).getClubName1())) &&(clubName2.equalsIgnoreCase((footBallClub).getClubName2()))){
                         nameCheck = false;
-                        System.out.println("Duplicate matches");
+                        System.out.println("Duplicate matches");         //checking matches are duplicate or not
                         break;
                     }
                     else {
@@ -207,11 +201,11 @@ public class Main {
             do {
                 try {
                     Scanner input5 = new Scanner(System.in);
-                    System.out.print("\n>> 1. Score of Home team : ");
+                    System.out.print("\n>> 1. Score of Home team : ");   //enter score in first team
                     team1Scored = input5.nextInt();
                     scoredBoolean = true;
                 } catch (RuntimeException e) {
-                    System.out.println("\t\tPlease enter integer input!\n");
+                    System.out.println("\t\tPlease enter integer input!\n");  //validating score
                     scoredBoolean = false;
                 }
             } while (!scoredBoolean);
@@ -219,29 +213,29 @@ public class Main {
             do {
                 try {
                     Scanner input5 = new Scanner(System.in);
-                    System.out.print(">> 2. Score of Away team : ");
+                    System.out.print(">> 2. Score of Away team : ");        //enter score in second team
                     team2Scored = input5.nextInt();
                     System.out.println();
                     scoredBoolean = true;
                 } catch (RuntimeException e) {
-                    System.out.println("\t\tPlease enter integer input!\n");
+                    System.out.println("\t\tPlease enter integer input!\n");        //validating score
                     scoredBoolean = false;
                 }
             } while (!scoredBoolean);
 
             for (SportClub footBallClub : PremierLeagueManager.premierLeague) {       //calculation part
-                if ((footBallClub.getClubName1().equals(clubName1))) {
-                    if (team1Scored > team2Scored) {
+                if ((footBallClub.getClubName1().equalsIgnoreCase(clubName1))) {        //update all statistics to relevant their club name
+                    if (team1Scored > team2Scored) {                                    //checking score1 greater the to score2
                         wins1 = ((FootBallClub) footBallClub).getWins()+1;
                         defeats1 = ((FootBallClub) footBallClub).getDefeats();
                         noOfPoints1 = ((FootBallClub) footBallClub).getNoOfPoints()+3;
                     }
-                    else if (team2Scored > team1Scored) {
+                    else if (team2Scored > team1Scored) {                           //checking score2 greater the to score1
                         wins1 = ((FootBallClub) footBallClub).getWins();
                         defeats1 = ((FootBallClub) footBallClub).getDefeats()+1;
                         noOfPoints1 = ((FootBallClub) footBallClub).getNoOfPoints();
                     }
-                    else if (team1Scored == team2Scored) {
+                    else if (team1Scored == team2Scored) {                          //checking score1 equal to score2
                         wins1 = ((FootBallClub) footBallClub).getWins();
                         defeats1 = ((FootBallClub) footBallClub).getDefeats();
                         draws1 = ((FootBallClub) footBallClub).getDraws()+1;
@@ -255,7 +249,7 @@ public class Main {
                     PremierLeagueManager.premierLeague.set(a,footballClub1);         //set the first team object to the relevant index number
 
 
-                }else if ((footBallClub.getClubName1().equals(clubName2))){
+                }else if ((footBallClub.getClubName1().equalsIgnoreCase(clubName2))){           //calculation part to the second team
                     if (team2Scored > team1Scored) {
                         wins2 = ((FootBallClub) footBallClub).getWins()+1;
                         defeats2 = ((FootBallClub) footBallClub).getDefeats();
@@ -285,20 +279,20 @@ public class Main {
             premierLeagueManager.addPlayedMatch(playedMatch1);
         }
         else {
-            System.out.println("There are no two football clubs to add scored and date!");
+            System.out.println("There are no two football clubs to add scored and date!");          //prompt message the are no football clubs
         }
     }
 
-    public static void random()  {
+    public static void random()  {              //random option to the gui part
         boolean nameCheck = false;
         if ((PremierLeagueManager.premierLeague.size()-1)*(PremierLeagueManager.premierLeague.size())>(PremierLeagueManager.matches.size())) {
             do {
                 Random rand = new Random();
-                SportClub randTest1 = PremierLeagueManager.premierLeague.get(rand.nextInt(PremierLeagueManager.premierLeague.size()));
+                SportClub randTest1 = PremierLeagueManager.premierLeague.get(rand.nextInt(PremierLeagueManager.premierLeague.size()));          //getting random club name from array list
                 SportClub randTest2 = PremierLeagueManager.premierLeague.get(rand.nextInt(PremierLeagueManager.premierLeague.size()));
-                clubName1 = randTest1.getClubName1();
+                clubName1 = randTest1.getClubName1();           //random club name initialize to the variable
                 clubName2 = randTest2.getClubName1();
-                if (!clubName1.equalsIgnoreCase(clubName2)) {
+                if (!clubName1.equalsIgnoreCase(clubName2)) {           //checking to random names are equal or not
                     for (SportClub footBallClub : PremierLeagueManager.matches) {
                         if ((clubName1.equalsIgnoreCase((footBallClub).getClubName1())) && (clubName2.equalsIgnoreCase((footBallClub).getClubName2()))) {
                             nameCheck = false;
@@ -319,16 +313,16 @@ public class Main {
             long end = endDate.toEpochDay();
 
             long randomEpochDay = ThreadLocalRandom.current().longs(start, end).findAny().getAsLong();
-            String date = String.valueOf(LocalDate.ofEpochDay(randomEpochDay));
+            String date = String.valueOf(LocalDate.ofEpochDay(randomEpochDay));         //getting random date between 2020-08-1 to 2021-05-31
             //System.out.println(date);
 
 
             Random randScore = new Random();
-            team1Scored = randScore.nextInt(15);
+            team1Scored = randScore.nextInt(15);   //getting random score between 0 to 15
             team2Scored = randScore.nextInt(15);
 
             for (SportClub footBallClub : PremierLeagueManager.premierLeague) {       //calculation part
-                if ((footBallClub.getClubName1().equals(clubName1))) {
+                if ((footBallClub.getClubName1().equalsIgnoreCase(clubName1))) {
                     if (team1Scored > team2Scored) {
                         wins1 = ((FootBallClub) footBallClub).getWins()+1;
                         defeats1 = ((FootBallClub) footBallClub).getDefeats();
@@ -353,7 +347,7 @@ public class Main {
                     PremierLeagueManager.premierLeague.set(PremierLeagueManager.premierLeague.indexOf(footBallClub),footballClub1);         //set the first team object to the relevant index number
 
 
-                }else if ((footBallClub.getClubName1().equals(clubName2))){
+                }else if ((footBallClub.getClubName1().equalsIgnoreCase(clubName2))){
                     if (team2Scored > team1Scored) {
                         wins2 = ((FootBallClub) footBallClub).getWins()+1;
                         defeats2 = ((FootBallClub) footBallClub).getDefeats();
