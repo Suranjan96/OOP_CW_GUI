@@ -1,9 +1,9 @@
 import java.util.Comparator;
 
-public class Wins implements Comparator<FootBallClub> {
+public class Wins implements Comparator<SportClub> {
 
-    public int compare(FootBallClub wins1, FootBallClub wins2){
-        return wins1.getWins()-wins2.getWins();
+    public int compare(SportClub wins1, SportClub wins2){
+        return ((FootBallClub)wins1).getWins()-((FootBallClub)wins2).getWins();
     }
 
 

@@ -26,8 +26,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class GUI extends Application {
-    private final static Wins wins = new Wins();
-    private final static PremierLeagueManager premierLeagueManager = new PremierLeagueManager();
+
+    private boolean True;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -183,8 +184,7 @@ public class GUI extends Application {
 
 
         //Adding data to the table
-       //ObservableList<String> list = FXCollections.observableArrayList();
-       table.setItems(data);
+        table.setItems(data);
        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
        table.getColumns().addAll(name, played, won, drawn, lost, goalFor, goalAgainst, gaolDiffernce, points);
 
@@ -243,11 +243,9 @@ public class GUI extends Application {
         sortWon.setStyle("-fx-font-size: 16;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
 
         sortWon.setOnAction(event -> {
-            PremierLeagueManager.premierLeague.sort(Collections.reverseOrder());
-           /* List list1 = Arrays.asList(PremierLeagueManager.premierLeague);
-            Collections.sort(list1,new Score());*/
-            stage.close();
-            rankingTable();
+           Collections.sort(PremierLeagueManager.premierLeague,new Wins());
+           stage.close();
+           rankingTable();
         });
 
         Button sortGF;
@@ -260,12 +258,6 @@ public class GUI extends Application {
 
         sortGF.setOnAction(event -> {
             Collections.sort(PremierLeagueManager.premierLeague,new Score());
-
-            /*List list1 = Arrays.asList(PremierLeagueManager.premierLeague);
-            Collections.sort(list1,new Score());
-            for (SportClub a : PremierLeagueManager.premierLeague){
-                System.out.println(((FootBallClub)a).getScored());
-            }*/
             stage.close();
             rankingTable();
 
@@ -281,8 +273,6 @@ public class GUI extends Application {
 
         sortPoint.setOnAction(event -> {
             PremierLeagueManager.premierLeague.sort(Collections.reverseOrder());
-            /*List list1 = Arrays.asList(PremierLeagueManager.premierLeague);
-            Collections.sort(list1,new Score());*/
             stage.close();
             rankingTable();
 
@@ -420,7 +410,7 @@ public class GUI extends Application {
         pane.getChildren().add(random = new Button("Let's Play"));
         random.setPrefHeight(50);
         random.setPrefWidth(150);
-        random.setLayoutX(500);
+        random.setLayoutX(750);
         random.setLayoutY(25);
         random.setStyle("-fx-font-size: 20;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
         random.setOnAction(event -> {
@@ -453,13 +443,34 @@ public class GUI extends Application {
             stage.close();
                 });
 
+        Label label1;
+        pane.getChildren().add(label1 = new Label("Sort by:-"));
+        label1.setTextFill(Color.web("#ffffff", 1));
+        Font font1 = Font.font("verdana", FontWeight.BOLD, 22);
+        label1.setFont(font1);
+        label1.setPrefHeight(30);
+        label1.setPrefWidth(150);
+        label1.setLayoutX(40);
+        label1.setLayoutY(600);
+
+        Button sortGF;
+        pane.getChildren().add(sortGF = new Button("Date"));
+        sortGF.setPrefHeight(10);
+        sortGF.setPrefWidth(80);
+        sortGF.setLayoutX(40);
+        sortGF.setLayoutY(650);
+        sortGF.setStyle("-fx-font-size: 16;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
+        sortGF.setOnAction(event -> {
+            Collections.sort(PremierLeagueManager.matches,new DateSort());
+            stage.close();
+            matchTable();
+        });
+
         scene = new Scene(pane, 1000, 800);
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
 
-    public void searchDate(){
 
-    }
 }

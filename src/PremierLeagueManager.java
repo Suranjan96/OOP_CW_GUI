@@ -150,9 +150,7 @@ public class PremierLeagueManager implements LeagueManager  {
         }
     }
 
-    public void check(){
 
-    }
 
 
 }

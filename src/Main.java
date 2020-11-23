@@ -33,9 +33,7 @@ public class Main {
     private static int goalDifference2 =0;
     private static String date;
 
-
-
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
         premierLeagueManager.loadInformation();    //loading stored data
         System.out.println("**************************** Premier League Manager ****************************");
         menu:
@@ -122,7 +120,7 @@ public class Main {
             } while (!nameCheck);
 
             System.out.println("\nSuccessfully "+clubName1 +" club added to the Premier League");
-            SportClub footballClub = new FootBallClub(clubName1,"",location,foundedYear,0,0,0,0,0,0,0,0,"-");   //pass data to the constructor
+            SportClub footballClub = new FootBallClub(clubName1,"",location,foundedYear,0,0,0,0,0,0,0,0,"");   //pass data to the constructor
             //footballClub = new FootBallClub(clubName,location,foundedYear,wins,draws,defeats,noOfGoals,scored,noOfPoints,playedMatches,date);
             //teams+=1;
             premierLeagueManager.createNewClub(footballClub);
