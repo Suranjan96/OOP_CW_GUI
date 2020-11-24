@@ -1,4 +1,7 @@
+import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import javafx.application.Application;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -17,6 +20,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import javax.swing.event.ChangeListener;
 import java.util.Collections;
 
 public class GUI extends Application {
@@ -28,7 +32,6 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         mainPage();
-
     }
 
     public void mainPage(){
@@ -38,54 +41,47 @@ public class GUI extends Application {
 
         AnchorPane mainLayout = new AnchorPane();
 
-
-        Label label = new Label("Premier League");
+        Label label = new Label("Premier League");              //main page label
         label.setTextFill(Color.web("#ffffff", 1));
-        //Font font = Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30);
-        //label.setFont(font);
-        //label.setFont(Font.font(58));
         label.setPrefHeight(115);
         label.setPrefWidth(529);
-        //label.setLayoutX(125);
         label.setLayoutY(15);
         label.setStyle("-fx-font-size: 40;"+"-fx-font-weight: bold;"+"-fx-alignment: center;"+"-fx-background-radius: 50px;");
 
-        Button btnRanking = new javafx.scene.control.Button("Ranking Table");
+        Button btnRanking = new javafx.scene.control.Button("Ranking Table");       //main page button to show ranking table
         btnRanking.setLayoutX(125);
         btnRanking.setLayoutY(150);
         btnRanking.setPrefWidth(250);
         btnRanking.setStyle("-fx-font-size: 20;"+"-fx-font-weight: bold;"+"-fx-alignment: center;"+"-fx-background-radius: 50px;");
 
-        Button btnMatches = new javafx.scene.control.Button("Table of Matches");
+        Button btnMatches = new javafx.scene.control.Button("Table of Matches");    //main page 2nd button to show match table
         btnMatches.setLayoutX(125);
         btnMatches.setLayoutY(250);
         btnMatches.setPrefWidth(250);
         btnMatches.setStyle("-fx-font-size: 20;"+"-fx-font-weight: bold;"+"-fx-alignment: center;"+"-fx-background-radius: 50px;");
 
-        Button btnCloseWin = new Button("Exit");
+        Button btnCloseWin = new Button("Exit");            //exit button
         btnCloseWin.setLayoutX(300);
         btnCloseWin.setLayoutY(400);
         btnCloseWin.setPrefWidth(100);
         btnCloseWin.setStyle("-fx-font-size: 15;"+"-fx-font-weight: bold;"+"-fx-alignment: center;"+"-fx-background-radius: 50px;");
         btnCloseWin.setOnAction(event -> primaryStage.close());
 
-
-       //mainLayout.setStyle("-fx-background-color: #ffffff;");
         mainLayout.setStyle("-fx-background-image: url(img1.jpg);"+"-fx-background-repeat: stretch;"+
                 "-fx-background-size: 500 500;"+
-                "-fx-background-position: center center;");
+                "-fx-background-position: center center;");             //added background image for main page
         mainLayout.getChildren().addAll(label,btnRanking, btnMatches,btnCloseWin);      // 3 buttons add to main window layout
         mainScene = new Scene(mainLayout,500,500);
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(false);           //fixed the window
         primaryStage.setScene(mainScene);
         primaryStage.show();
 
-        btnRanking.setOnAction(event -> {       // Open action on Finance Calculator.
+        btnRanking.setOnAction(event -> {       // Open action on ranking table
             primaryStage.close();
             rankingTable();
 
         });
-        btnMatches.setOnAction(event -> {      //Open action on Auto loan Calculator
+        btnMatches.setOnAction(event -> {      //Open action on match table
             primaryStage.close();
             matchTable();
 
@@ -99,9 +95,9 @@ public class GUI extends Application {
 
         Pane pane = new Pane();
         Label label;
-        pane.getChildren().add(label = new Label("Ranking Table"));
+        pane.getChildren().add(label = new Label("Ranking Table"));         //add label
        label.setTextFill(Color.web("#ffffff", 1));
-       pane.setStyle("-fx-background-image: url(img2.jpg);"+"-fx-background-repeat: stretch;"+
+       pane.setStyle("-fx-background-image: url(img2.jpg);"+"-fx-background-repeat: stretch;"+          //set background picture for this window
                "-fx-background-size: 1000 800;"+
                "-fx-background-position: center center;");
         //pane.setStyle("-fx-background-color: #936ab7;");
@@ -113,16 +109,16 @@ public class GUI extends Application {
         label.setLayoutX(40);
         label.setLayoutY(15);
 
-        TableView<SportClub> table = new TableView<SportClub>();
-        final ObservableList<SportClub> data = FXCollections.observableArrayList(PremierLeagueManager.premierLeague);
-
+        TableView<SportClub> table = new TableView<SportClub>();                    //create table
+        final ObservableList<SportClub> data = FXCollections.observableArrayList(PremierLeagueManager.premierLeague);       //getting data to table from sport class in premier league array list
         /*TableColumn position = new TableColumn("Position");
         position.setCellValueFactory(new PropertyValueFactory("position"));
         position.setPrefWidth(80);*/
 
-        TableColumn name = new TableColumn("Club Name");
-        name.setCellValueFactory(new PropertyValueFactory("clubName1"));
-        name.setSortable(false);
+
+        TableColumn name = new TableColumn("Club Name");                    //add all data columns by columns
+        name.setCellValueFactory(new PropertyValueFactory("clubName1"));        //variable name in sportclub class
+        name.setSortable(false);                                                //disable sorting function in table
         name.setPrefWidth(160);
 
 
@@ -174,7 +170,6 @@ public class GUI extends Application {
         points.setPrefWidth(90);
         points.setStyle( "-fx-alignment: CENTER;");
 
-
         //Adding data to the table
         table.setItems(data);
        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -192,20 +187,20 @@ public class GUI extends Application {
         vbox.getChildren().addAll(label, table);
 
         Button btnOption1;
-        pane.getChildren().add(btnOption1 = new Button("Home"));
+        pane.getChildren().add(btnOption1 = new Button("Home"));            //add button to goto home page
         btnOption1.setPrefHeight(50);
         btnOption1.setPrefWidth(150);
         btnOption1.setLayoutX(500);
         btnOption1.setLayoutY(600);
         btnOption1.setStyle("-fx-font-size: 20;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
 
-        btnOption1.setOnAction(event -> {
+        btnOption1.setOnAction(event -> {           //on action to goto home page
             stage.close();
             mainPage();
         });
 
         Button exit;
-        pane.getChildren().add(exit = new Button("Exit"));
+        pane.getChildren().add(exit = new Button("Exit"));          //exit button
         exit.setPrefWidth(120);
         exit.setLayoutX(750);
         exit.setLayoutY(600);
@@ -217,7 +212,7 @@ public class GUI extends Application {
                 });
 
         Label label1;
-        pane.getChildren().add(label1 = new Label("Sort by:-"));
+        pane.getChildren().add(label1 = new Label("Sort by:-"));            //lable for sorting
         label1.setTextFill(Color.web("#ffffff", 1));
         Font font1 = Font.font("verdana", FontWeight.BOLD, 22);
         label1.setFont(font1);
@@ -227,7 +222,7 @@ public class GUI extends Application {
         label1.setLayoutY(600);
 
         Button sortWon;
-        pane.getChildren().add(sortWon = new Button("Won"));
+        pane.getChildren().add(sortWon = new Button("Won"));                //button for sorting wins for descending order
         sortWon.setPrefHeight(10);
         sortWon.setPrefWidth(80);
         sortWon.setLayoutX(40);
@@ -235,13 +230,13 @@ public class GUI extends Application {
         sortWon.setStyle("-fx-font-size: 16;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
 
         sortWon.setOnAction(event -> {
-           Collections.sort(PremierLeagueManager.premierLeague,new WinsSort());
+           Collections.sort(PremierLeagueManager.premierLeague,new WinsSort());         //sorting from comparator method
            stage.close();
            rankingTable();
         });
 
         Button sortGF;
-        pane.getChildren().add(sortGF = new Button("GF"));
+        pane.getChildren().add(sortGF = new Button("GF"));              //button for sorting score  for descending order
         sortGF.setPrefHeight(10);
         sortGF.setPrefWidth(80);
         sortGF.setLayoutX(40);
@@ -249,14 +244,14 @@ public class GUI extends Application {
         sortGF.setStyle("-fx-font-size: 16;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
 
         sortGF.setOnAction(event -> {
-            Collections.sort(PremierLeagueManager.premierLeague,new ScoreSort());
+            Collections.sort(PremierLeagueManager.premierLeague,new ScoreSort());             //sorting from comparator method
             stage.close();
             rankingTable();
 
         });
 
         Button sortPoint;
-        pane.getChildren().add(sortPoint = new Button("Points"));
+        pane.getChildren().add(sortPoint = new Button("Points"));            //button for sorting point  for descending order
         sortPoint.setPrefHeight(10);
         sortPoint.setPrefWidth(80);
         sortPoint.setLayoutX(40);
@@ -264,7 +259,7 @@ public class GUI extends Application {
         sortPoint.setStyle("-fx-font-size: 16;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
 
         sortPoint.setOnAction(event -> {
-            PremierLeagueManager.premierLeague.sort(Collections.reverseOrder());
+            PremierLeagueManager.premierLeague.sort(Collections.reverseOrder());                 //sorting from comparable method
             stage.close();
             rankingTable();
 
@@ -294,7 +289,7 @@ public class GUI extends Application {
         label.setLayoutX(40);
         label.setLayoutY(15);
 
-        ChoiceBox<String> choiceBox = new ChoiceBox();
+        ChoiceBox<String> choiceBox = new ChoiceBox();              //selecting to search date and club name
         choiceBox.getItems().addAll("Date", "Home Team","Away Team");
         choiceBox.setValue("Date");
 
@@ -309,10 +304,10 @@ public class GUI extends Application {
         pane.getChildren().add(datePicker);
         // Print the new date in the TextArea*/
 
-        TableView<SportClub> table = new TableView<SportClub>();
+        TableView<SportClub> table = new TableView<SportClub>();            //table data type is super class that sportclub class
         final ObservableList<SportClub> data1 = FXCollections.observableArrayList(PremierLeagueManager.matches);
 
-        TableColumn date1 = new TableColumn("Date");
+        TableColumn date1 = new TableColumn("Date");            //add columns to the table
         table.refresh();
         date1.setCellValueFactory(new PropertyValueFactory("date"));
         date1.setPrefWidth(160);
@@ -350,12 +345,11 @@ public class GUI extends Application {
         away_team.setStyle( "-fx-alignment: CENTER;");
 
         //Adding data to the table
-       // ObservableList<String> list = FXCollections.observableArrayList();
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         table.getColumns().addAll(date1, home_team, results, away_team);
 
         //Setting the size of the table
-        table.setFixedCellSize(40);
+        table.setFixedCellSize(40);                     //table size
         table.setMaxSize(820, 400);
         table.setItems(data1);
 
@@ -368,22 +362,22 @@ public class GUI extends Application {
             switch (choiceBox.getValue())//Switch on choiceBox value
             {
                 case "Date":
-                    (clubs).setPredicate(search -> ((FootBallClub)search).getDate().toLowerCase().contains(textfield.getText().toLowerCase().trim()));
+                    (clubs).setPredicate(search -> ((FootBallClub)search).getDate().toLowerCase().contains(textfield.getText().toLowerCase().trim()));      //search by date
                     break;
                 case "Home Team":
-                    clubs.setPredicate(search -> search.getClubName1().toLowerCase().contains(textfield.getText().toLowerCase().trim()));
+                    clubs.setPredicate(search -> search.getClubName1().toLowerCase().contains(textfield.getText().toLowerCase().trim()));                   //search by home team name
                     break;
                 case "Away Team":
-                    clubs.setPredicate(search -> search.getClubName2().toLowerCase().contains(textfield.getText().toLowerCase().trim()));
+                    clubs.setPredicate(search -> search.getClubName2().toLowerCase().contains(textfield.getText().toLowerCase().trim()));                   //search by away team name
                     break;
             }
         });
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
-        {//reset table and textfield when new choice is selected
+        {                       //reset table and textfield when new choice is selected
             if (newVal != null) {
                 textfield.setText("");
-                clubs.setPredicate(null);//This is same as saying member.setPredicate(p->true);
+                clubs.setPredicate(null);       //This is same as saying member.setPredicate(p->true);
             }
         });
 
@@ -399,7 +393,7 @@ public class GUI extends Application {
         vbox.getChildren().addAll(label,hBox1,table);
 
         Button random;
-        pane.getChildren().add(random = new Button("Let's Play"));
+        pane.getChildren().add(random = new Button("Let's Play"));              //random button
         random.setPrefHeight(50);
         random.setPrefWidth(150);
         random.setLayoutX(750);
@@ -408,11 +402,11 @@ public class GUI extends Application {
         random.setOnAction(event -> {
             Main.random();
             stage.close();
-            matchTable();
+            matchTable();           //call random method in main class
         });
 
         Button btnOption2;
-        pane.getChildren().add(btnOption2 = new Button("Home"));
+        pane.getChildren().add(btnOption2 = new Button("Home"));            //home button
         btnOption2.setPrefHeight(50);
         btnOption2.setPrefWidth(150);
         btnOption2.setLayoutX(500);
@@ -424,7 +418,7 @@ public class GUI extends Application {
         });
 
         Button exit;
-        pane.getChildren().add(exit = new Button("Exit"));
+        pane.getChildren().add(exit = new Button("Exit"));              //exit button
         exit.setPrefHeight(50);
         exit.setPrefWidth(120);
         exit.setLayoutX(750);
@@ -436,7 +430,7 @@ public class GUI extends Application {
                 });
 
         Label label1;
-        pane.getChildren().add(label1 = new Label("Sort by:-"));
+        pane.getChildren().add(label1 = new Label("Sort by:-"));        //sorting table
         label1.setTextFill(Color.web("#ffffff", 1));
         Font font1 = Font.font("verdana", FontWeight.BOLD, 22);
         label1.setFont(font1);
@@ -446,7 +440,7 @@ public class GUI extends Application {
         label1.setLayoutY(600);
 
         Button sortGF;
-        pane.getChildren().add(sortGF = new Button("Date"));
+        pane.getChildren().add(sortGF = new Button("Date"));            //sort by date all played matches
         sortGF.setPrefHeight(10);
         sortGF.setPrefWidth(80);
         sortGF.setLayoutX(40);
@@ -463,6 +457,4 @@ public class GUI extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
-
 }

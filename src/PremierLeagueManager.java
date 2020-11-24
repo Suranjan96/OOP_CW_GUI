@@ -2,28 +2,28 @@ import java.io.*;
 import java.util.*;
 
 public class PremierLeagueManager implements LeagueManager  {
-    public static List<SportClub> premierLeague = new ArrayList<>() ;
-    public static List<SportClub> matches = new ArrayList<>();
+    public static List<SportClub> premierLeague = new ArrayList<>() ;   // premier league array list all clubs statistics storing in this array
+    public static List<SportClub> matches = new ArrayList<>();          // all played matches storing in this array
 
     @Override
     public void createNewClub(SportClub footBallClub)  {
         premierLeague.add(footBallClub);
-        System.out.println("\nNumber of club registered: "+premierLeague.size());
+        System.out.println("\nNumber of club registered: "+premierLeague.size());       //promot message how many club were exciting
         System.out.println("Number of free slots : "+(20-premierLeague.size()));
 
     }
 
     @Override
     public void deleteClub() {
-        if(PremierLeagueManager.premierLeague.size()==20) {
+        if(PremierLeagueManager.premierLeague.size()==20) {     //to relegate there should be 20 clubs
             premierLeague.sort(Collections.reverseOrder());    //https://stackoverflow.com/questions/61224776/reason-no-instances-of-type-variables-t-exist-so-that-int-conforms-to-t
             //delete the last object from arraylist
             System.out.println("Relegated clubs are:- ");
             String leftAlignFormat = "| %-15s | %-6d | %-4d | %-6d | %-5d | %-5d | %-5d | %-5d | %-6d |%n";         //https://stackoverflow.com/questions/15215326/how-can-i-create-table-using-ascii-in-a-console
-            System.out.format("+-----------------+--------+------+--------+-------+-------+-------+-------+--------+%n");
+            System.out.format("+-----------------+--------+------+--------+-------+-------+-------+-------+--------+%n");       //creating table
             System.out.format("| Club name       | Played | Won  | Drawn  | Lost  |  GF   |  GA   |  GD   |Points  | %n");
             System.out.format("+-----------------+--------+------+--------+-------+-------+-------+-------+--------+%n");
-            for (int x = 1; x <= 3; x++) {
+            for (int x = 1; x <= 3; x++) {      //remove three clubs from table from last
                 SportClub footBallClub2 = premierLeague.get(premierLeague.size() - 1);
                 System.out.format(leftAlignFormat, footBallClub2.getClubName1(), ((FootBallClub) footBallClub2).getNoOfMatches(), ((FootBallClub) footBallClub2).getWins(),
                         ((FootBallClub) footBallClub2).getDraws(), ((FootBallClub) footBallClub2).getDefeats(), ((FootBallClub) footBallClub2).getScored(),
@@ -40,7 +40,7 @@ public class PremierLeagueManager implements LeagueManager  {
 
     @Override
     public void displayStatistics(String clubName)  {
-        if (premierLeague.size() >= 1) {
+        if (premierLeague.size() >= 1) {        //there should be at least one club to show some staticstic
             boolean nameCheck = false;
             do {
                 Scanner input = new Scanner(System.in);
@@ -122,8 +122,7 @@ public class PremierLeagueManager implements LeagueManager  {
             FileOutputStream fileOut = new FileOutputStream("ClubData");                    //https://howtodoinjava.com/java/collections/arraylist/serialize-deserialize-arraylist/#:~:text=In%20Java%2C%20ArrayList%20class%20is,to%20deserialize%20an%20arraylist%20object.
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(premierLeague);                                 //Serialize arraylist of objects
-            out.writeObject(matches);
-            //out.writeObject(matches2);
+            out.writeObject(matches);                                       //storing two whole array list with objects
             out.close();
             fileOut.close();
             System.out.printf("Serialized data has been successfully saved!!");
@@ -138,7 +137,7 @@ public class PremierLeagueManager implements LeagueManager  {
             FileInputStream fileIn = new FileInputStream("ClubData");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             premierLeague = (ArrayList) in.readObject();                //Deserialize list of objects
-            matches = (ArrayList) in.readObject();
+            matches = (ArrayList) in.readObject();                      //loading two array list with objects
             in.close();
             fileIn.close();
             System.out.println("Data has been successfully loaded!\n");

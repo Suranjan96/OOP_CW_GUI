@@ -228,11 +228,13 @@ public class Main {
                     if (team1Scored > team2Scored) {                                    //checking score1 greater the to score2
                         wins1 = ((FootBallClub) footBallClub).getWins()+1;
                         defeats1 = ((FootBallClub) footBallClub).getDefeats();
+                        draws1 = ((FootBallClub) footBallClub).getDraws();
                         noOfPoints1 = ((FootBallClub) footBallClub).getNoOfPoints()+3;
                     }
                     else if (team2Scored > team1Scored) {                           //checking score2 greater the to score1
                         wins1 = ((FootBallClub) footBallClub).getWins();
                         defeats1 = ((FootBallClub) footBallClub).getDefeats()+1;
+                        draws1 = ((FootBallClub) footBallClub).getDraws();
                         noOfPoints1 = ((FootBallClub) footBallClub).getNoOfPoints();
                     }
                     else if (team1Scored == team2Scored) {                          //checking score1 equal to score2
@@ -253,11 +255,13 @@ public class Main {
                     if (team2Scored > team1Scored) {
                         wins2 = ((FootBallClub) footBallClub).getWins()+1;
                         defeats2 = ((FootBallClub) footBallClub).getDefeats();
+                        draws2 = ((FootBallClub) footBallClub).getDraws();
                         noOfPoints2 = ((FootBallClub) footBallClub).getNoOfPoints()+3;
                     }
                     else if (team1Scored > team2Scored) {
                         wins2 = ((FootBallClub) footBallClub).getWins();
                         defeats2 = ((FootBallClub) footBallClub).getDefeats()+1;
+                        draws2 = ((FootBallClub) footBallClub).getDraws();
                         noOfPoints2 = ((FootBallClub) footBallClub).getNoOfPoints();
                     }
                     else if (team1Scored == team2Scored) {
@@ -327,11 +331,13 @@ public class Main {
                         wins1 = ((FootBallClub) footBallClub).getWins()+1;
                         defeats1 = ((FootBallClub) footBallClub).getDefeats();
                         noOfPoints1 = ((FootBallClub) footBallClub).getNoOfPoints()+3;
+                        draws1 = ((FootBallClub) footBallClub).getDraws();
                     }
                     else if (team2Scored > team1Scored) {
                         wins1 = ((FootBallClub) footBallClub).getWins();
                         defeats1 = ((FootBallClub) footBallClub).getDefeats()+1;
                         noOfPoints1 = ((FootBallClub) footBallClub).getNoOfPoints();
+                        draws1 = ((FootBallClub) footBallClub).getDraws();
                     }
                     else if (team1Scored == team2Scored) {
                         wins1 = ((FootBallClub) footBallClub).getWins();
@@ -351,11 +357,13 @@ public class Main {
                     if (team2Scored > team1Scored) {
                         wins2 = ((FootBallClub) footBallClub).getWins()+1;
                         defeats2 = ((FootBallClub) footBallClub).getDefeats();
+                        draws2 = ((FootBallClub) footBallClub).getDraws();
                         noOfPoints2 = ((FootBallClub) footBallClub).getNoOfPoints()+3;
                     }
                     else if (team1Scored > team2Scored) {
                         wins2 = ((FootBallClub) footBallClub).getWins();
                         defeats2 = ((FootBallClub) footBallClub).getDefeats()+1;
+                        draws2 = ((FootBallClub) footBallClub).getDraws();
                         noOfPoints2 = ((FootBallClub) footBallClub).getNoOfPoints();
                     }
                     else if (team1Scored == team2Scored) {
