@@ -42,12 +42,13 @@ public class Main {
             System.out.println("");
             System.out.println("|----------------------------MENU BAR-------------------------|");
             System.out.println("|'1'- Create new football club                                |");
-            System.out.println("|'2'- Relegate an existing clubs                              |");
-            System.out.println("|'3'- Display the various statistics for a selected club      |");
-            System.out.println("|'4'- Display the Premier League Table                        |");
-            System.out.println("|'5'- Add a played match with its score and its date          |");
-            System.out.println("|'6'- Saving in a file of all the information                 |");
-            System.out.println("|'7'- Open GUI to show tables                                 |");
+            System.out.println("|'2'- Delete an existing club for name                        |");
+            System.out.println("|'3'- Relegate an existing clubs                              |");
+            System.out.println("|'4'- Display the various statistics for a selected club      |");
+            System.out.println("|'5'- Display the Premier League Table                        |");
+            System.out.println("|'6'- Add a match with its score and its date                 |");
+            System.out.println("|'7'- Saving in a file of all the information                 |");
+            System.out.println("|'8'- Open GUI to show tables                                 |");
             System.out.println("|'Q'- Quit                                                    |");
             System.out.println("|-------------------------------------------------------------|");
             System.out.print("Enter letter: ");
@@ -58,21 +59,24 @@ public class Main {
                     createNewFootBallClub();
                     break;
                 case "2":
-                    premierLeagueManager.deleteClub();
+                    premierLeagueManager.deleteClub(clubName1);
                     break;
                 case "3":
-                    premierLeagueManager.displayStatistics(clubName1);
+                    premierLeagueManager.relegateClubs();
                     break;
                 case "4":
-                    premierLeagueManager.displayLeagueTable();
+                    premierLeagueManager.displayStatistics(clubName1);
                     break;
                 case "5":
-                    addPlayedMatch();
+                    premierLeagueManager.displayLeagueTable();
                     break;
                 case "6":
+                    addPlayedMatch();
+                    break;
+                case "7":
                     premierLeagueManager.saveInformation();
                     break;
-                case"7":
+                case"8":
                     Application.launch(GUI.class);
                     System.exit(0);
                     break;
@@ -93,7 +97,7 @@ public class Main {
             do {
                 System.out.print("1. Name of your club : ");       //enter club name
                 clubName1 = input.next();
-                nameCheck = SportClub.clubChecker(clubName1);
+                nameCheck = SportsClub.clubChecker(clubName1);
             } while (!nameCheck);
 
 
@@ -116,7 +120,7 @@ public class Main {
             } while (!nameCheck);
 
             System.out.println("\nSuccessfully "+clubName1 +" club added to the Premier League");     //prompt message
-            SportClub footballClub = new FootBallClub(clubName1,"",location,foundedYear,0,0,0,0,0,0,0,0,"");   //pass data to the constructor
+            SportsClub footballClub = new FootBallClub(clubName1,"",location,foundedYear,0,0,0,0,0,0,0,0,"");   //pass data to the constructor
             premierLeagueManager.createNewClub(footballClub);    //call to the create method in premier league class
 
         }else if(PremierLeagueManager.premierLeague.size()==20) {      //maximum length is 20
@@ -145,7 +149,7 @@ public class Main {
                     System.out.print("1. Enter Home Team :");    //getting the first club name
                     clubName1 = input.next();
                     a = 0;
-                    for (SportClub footBallClub : PremierLeagueManager.premierLeague) {   //checking relevant name from arraylist
+                    for (SportsClub footBallClub : PremierLeagueManager.premierLeague) {   //checking relevant name from arraylist
                         if (footBallClub.getClubName1().equalsIgnoreCase(clubName1)) {
                             nameCheck = true;
                             break;
@@ -166,7 +170,7 @@ public class Main {
                     clubName2 = input.next();
                     b = 0;
                     if (!clubName1.equalsIgnoreCase(clubName2)) {
-                        for (SportClub footBallClub : PremierLeagueManager.premierLeague) {     //checking relevant name from arraylist
+                        for (SportsClub footBallClub : PremierLeagueManager.premierLeague) {     //checking relevant name from arraylist
                             if (footBallClub.getClubName1().equalsIgnoreCase(clubName2)) {
                                 nameCheck = true;
                                 break;
@@ -185,7 +189,7 @@ public class Main {
                     }
                 } while (!nameCheck);
 
-                for (SportClub footBallClub : PremierLeagueManager.matches) {
+                for (SportsClub footBallClub : PremierLeagueManager.matches) {
                     if ((clubName1.equalsIgnoreCase((footBallClub).getClubName1())) &&(clubName2.equalsIgnoreCase((footBallClub).getClubName2()))){
                         nameCheck = false;
                         System.out.println("Duplicate matches");         //checking matches are duplicate or not
@@ -223,7 +227,7 @@ public class Main {
                 }
             } while (!scoredBoolean);
 
-            for (SportClub footBallClub : PremierLeagueManager.premierLeague) {       //calculation part
+            for (SportsClub footBallClub : PremierLeagueManager.premierLeague) {       //calculation part
                 if ((footBallClub.getClubName1().equalsIgnoreCase(clubName1))) {        //update all statistics to relevant their club name
                     if (team1Scored > team2Scored) {                                    //checking score1 greater the to score2
                         wins1 = ((FootBallClub) footBallClub).getWins()+1;
@@ -247,7 +251,7 @@ public class Main {
                     scored1 = ((FootBallClub) footBallClub).getScored()+team1Scored;
                     playedMatches1=((FootBallClub) footBallClub).getNoOfMatches()+1;
                     goalDifference1 =scored1-noOfGoals1;
-                    SportClub footballClub1 = new FootBallClub(clubName1,"",location,foundedYear,wins1,draws1,defeats1,noOfGoals1,scored1,noOfPoints1,playedMatches1, goalDifference1,date);     //pass the object to the constructor
+                    SportsClub footballClub1 = new FootBallClub(clubName1,"",location,foundedYear,wins1,draws1,defeats1,noOfGoals1,scored1,noOfPoints1,playedMatches1, goalDifference1,date);     //pass the object to the constructor
                     PremierLeagueManager.premierLeague.set(a,footballClub1);         //set the first team object to the relevant index number
 
 
@@ -274,12 +278,12 @@ public class Main {
                     scored2 = ((FootBallClub) footBallClub).getScored()+team2Scored;
                     playedMatches2=((FootBallClub) footBallClub).getNoOfMatches()+1;
                     goalDifference2 =scored2-noOfGoals2;
-                    SportClub footballClub2 = new FootBallClub(clubName2,"",location,foundedYear,wins2,draws2,defeats2,noOfGoals2,scored2,noOfPoints2,playedMatches2, goalDifference2,date);
+                    SportsClub footballClub2 = new FootBallClub(clubName2,"",location,foundedYear,wins2,draws2,defeats2,noOfGoals2,scored2,noOfPoints2,playedMatches2, goalDifference2,date);
                     PremierLeagueManager.premierLeague.set(b,footballClub2);         //set the second team object to the relevant index number
 
                 }
             }
-            SportClub playedMatch1 = new FootBallClub(clubName1,clubName2,"","",0,0,0,team1Scored,team2Scored,0,0,0,date);   //pass the matches details to the constructor
+            SportsClub playedMatch1 = new FootBallClub(clubName1,clubName2,"","",0,0,0,team1Scored,team2Scored,0,0,0,date);   //pass the matches details to the constructor
             premierLeagueManager.addPlayedMatch(playedMatch1);
         }
         else {
@@ -292,12 +296,12 @@ public class Main {
         if ((PremierLeagueManager.premierLeague.size()-1)*(PremierLeagueManager.premierLeague.size())>(PremierLeagueManager.matches.size())) {
             do {
                 Random rand = new Random();
-                SportClub randTest1 = PremierLeagueManager.premierLeague.get(rand.nextInt(PremierLeagueManager.premierLeague.size()));          //getting random club name from array list
-                SportClub randTest2 = PremierLeagueManager.premierLeague.get(rand.nextInt(PremierLeagueManager.premierLeague.size()));
+                SportsClub randTest1 = PremierLeagueManager.premierLeague.get(rand.nextInt(PremierLeagueManager.premierLeague.size()));          //getting random club name from array list
+                SportsClub randTest2 = PremierLeagueManager.premierLeague.get(rand.nextInt(PremierLeagueManager.premierLeague.size()));
                 clubName1 = randTest1.getClubName1();           //random club name initialize to the variable
                 clubName2 = randTest2.getClubName1();
                 if (!clubName1.equalsIgnoreCase(clubName2)) {           //checking to random names are equal or not
-                    for (SportClub footBallClub : PremierLeagueManager.matches) {
+                    for (SportsClub footBallClub : PremierLeagueManager.matches) {
                         if ((clubName1.equalsIgnoreCase((footBallClub).getClubName1())) && (clubName2.equalsIgnoreCase((footBallClub).getClubName2()))) {
                             nameCheck = false;
                             break;
@@ -325,7 +329,7 @@ public class Main {
             team1Scored = randScore.nextInt(15);   //getting random score between 0 to 15
             team2Scored = randScore.nextInt(15);
 
-            for (SportClub footBallClub : PremierLeagueManager.premierLeague) {       //calculation part
+            for (SportsClub footBallClub : PremierLeagueManager.premierLeague) {       //calculation part
                 if ((footBallClub.getClubName1().equalsIgnoreCase(clubName1))) {
                     if (team1Scored > team2Scored) {
                         wins1 = ((FootBallClub) footBallClub).getWins()+1;
@@ -349,7 +353,7 @@ public class Main {
                     scored1 = ((FootBallClub) footBallClub).getScored()+team1Scored;
                     playedMatches1=((FootBallClub) footBallClub).getNoOfMatches()+1;
                     goalDifference1 =scored1-noOfGoals1;
-                    SportClub footballClub1 = new FootBallClub(clubName1,"",location,foundedYear,wins1,draws1,defeats1,noOfGoals1,scored1,noOfPoints1,playedMatches1, goalDifference1,date);     //pass the object to the constructor
+                    SportsClub footballClub1 = new FootBallClub(clubName1,"",location,foundedYear,wins1,draws1,defeats1,noOfGoals1,scored1,noOfPoints1,playedMatches1, goalDifference1,date);     //pass the object to the constructor
                     PremierLeagueManager.premierLeague.set(PremierLeagueManager.premierLeague.indexOf(footBallClub),footballClub1);         //set the first team object to the relevant index number
 
 
@@ -376,11 +380,11 @@ public class Main {
                     scored2 = ((FootBallClub) footBallClub).getScored()+team2Scored;
                     playedMatches2=((FootBallClub) footBallClub).getNoOfMatches()+1;
                     goalDifference2 =scored2-noOfGoals2;
-                    SportClub footballClub2 = new FootBallClub(clubName2,"",location,foundedYear,wins2,draws2,defeats2,noOfGoals2,scored2,noOfPoints2,playedMatches2, goalDifference2,date);
+                    SportsClub footballClub2 = new FootBallClub(clubName2,"",location,foundedYear,wins2,draws2,defeats2,noOfGoals2,scored2,noOfPoints2,playedMatches2, goalDifference2,date);
                     PremierLeagueManager.premierLeague.set(PremierLeagueManager.premierLeague.indexOf(footBallClub),footballClub2);         //set the second team object to the relevant index number
                 }
             }
-            SportClub playedMatch1 = new FootBallClub(clubName1,clubName2,"","",0,0,0,team1Scored,team2Scored,0,0,0,date);   //pass the matches details to the constructor
+            SportsClub playedMatch1 = new FootBallClub(clubName1,clubName2,"","",0,0,0,team1Scored,team2Scored,0,0,0,date);   //pass the matches details to the constructor
             premierLeagueManager.addPlayedMatch(playedMatch1);
         }
     }

@@ -1,12 +1,12 @@
 import java.io.Serializable;
 
-public class SportClub implements Serializable {
+public class SportsClub implements Serializable {
     private String clubName1;
     private String clubName2;
     private String location;
     private String foundedYear;
 
-    public SportClub(String clubName1, String clubName2, String location, String foundedYear) {
+    public SportsClub(String clubName1, String clubName2, String location, String foundedYear) {
         this.clubName1 = clubName1;
         this.clubName2 = clubName2;
         this.location = location;
@@ -47,7 +47,7 @@ public class SportClub implements Serializable {
 
     public static boolean clubChecker(String clubName){      //duplicate club names checking
         if((clubName!=null) && clubName.matches("^[a-zA-Z]*$")){
-            for (SportClub name : PremierLeagueManager.premierLeague){
+            for (SportsClub name : PremierLeagueManager.premierLeague){
                 if (name.getClubName1().equalsIgnoreCase(clubName)){
                     System.out.println("Duplicate club name!!");
                     return false;

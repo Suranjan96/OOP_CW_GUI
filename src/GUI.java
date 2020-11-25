@@ -1,7 +1,4 @@
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import javafx.application.Application;
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -20,7 +17,6 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-import javax.swing.event.ChangeListener;
 import java.util.Collections;
 
 public class GUI extends Application {
@@ -109,8 +105,8 @@ public class GUI extends Application {
         label.setLayoutX(40);
         label.setLayoutY(15);
 
-        TableView<SportClub> table = new TableView<SportClub>();                    //create table
-        final ObservableList<SportClub> data = FXCollections.observableArrayList(PremierLeagueManager.premierLeague);       //getting data to table from sport class in premier league array list
+        TableView<SportsClub> table = new TableView<SportsClub>();                    //create table
+        final ObservableList<SportsClub> data = FXCollections.observableArrayList(PremierLeagueManager.premierLeague);       //getting data to table from sport class in premier league array list
         /*TableColumn position = new TableColumn("Position");
         position.setCellValueFactory(new PropertyValueFactory("position"));
         position.setPrefWidth(80);*/
@@ -304,8 +300,8 @@ public class GUI extends Application {
         pane.getChildren().add(datePicker);
         // Print the new date in the TextArea*/
 
-        TableView<SportClub> table = new TableView<SportClub>();            //table data type is super class that sportclub class
-        final ObservableList<SportClub> data1 = FXCollections.observableArrayList(PremierLeagueManager.matches);
+        TableView<SportsClub> table = new TableView<SportsClub>();            //table data type is super class that sportclub class
+        final ObservableList<SportsClub> data1 = FXCollections.observableArrayList(PremierLeagueManager.matches);
 
         TableColumn date1 = new TableColumn("Date");            //add columns to the table
         table.refresh();
@@ -353,7 +349,7 @@ public class GUI extends Application {
         table.setMaxSize(820, 400);
         table.setItems(data1);
 
-        FilteredList<SportClub> clubs = new FilteredList(data1, p -> true);         //https://stackoverflow.com/questions/47559491/making-a-search-bar-in-javafx
+        FilteredList<SportsClub> clubs = new FilteredList(data1, p -> true);         //https://stackoverflow.com/questions/47559491/making-a-search-bar-in-javafx
         (table).setItems(clubs);
         TextField textfield = new TextField();
         textfield.setPromptText("Search here!");

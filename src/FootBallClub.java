@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public  class FootBallClub extends SportClub implements Comparable<FootBallClub> {
+public  class FootBallClub extends SportsClub implements Comparable<FootBallClub> {
     private int wins;
     private int draws;
     private int defeats;

@@ -1,8 +1,8 @@
 import java.util.Comparator;
 
-public class ScoreSort implements Comparator<SportClub> {
+public class ScoreSort implements Comparator<SportsClub> {
 
-    public int compare(SportClub score1,SportClub score2){
+    public int compare(SportsClub score1, SportsClub score2){
         int compareScore1 = ((FootBallClub)score1).getScored();
         int compareScore2 = ((FootBallClub)score2).getScored();
 
