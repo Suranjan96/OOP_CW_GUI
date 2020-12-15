@@ -118,16 +118,18 @@ public class PremierLeagueManager implements LeagueManager  {
         if (premierLeague.size()>=1){
             premierLeague.sort(Collections.reverseOrder());
             System.out.println("Ranking Table:-");
-            String leftAlignFormat = "| %-15s | %-6d | %-4d | %-6d | %-5d | %-5d | %-5d | %-5d | %-6d |%n";         //https://stackoverflow.com/questions/15215326/how-can-i-create-table-using-ascii-in-a-console
-            System.out.format("+-----------------+--------+------+--------+-------+-------+-------+-------+--------+%n");
-            System.out.format("| Club name       | Played | Won  | Drawn  | Lost  |  GF   |  GA   |  GD   |Points  | %n");
-            System.out.format("+-----------------+--------+------+--------+-------+-------+-------+-------+--------+%n");
+            String leftAlignFormat = "| %-8d | %-15s | %-6d | %-4d | %-6d | %-5d | %-5d | %-5d | %-5d | %-6d |%n";         //https://stackoverflow.com/questions/15215326/how-can-i-create-table-using-ascii-in-a-console
+            System.out.format("+----------+-----------------+--------+------+--------+-------+-------+-------+-------+--------+%n");
+            System.out.format("| Position |    Club name    | Played | Won  | Drawn  | Lost  |  GF   |  GA   |  GD   |Points  | %n");
+            System.out.format("+----------+-----------------+--------+------+--------+-------+-------+-------+-------+--------+%n");
+            int count =0;
             for (SportsClub footBallClub : premierLeague) {
-                System.out.format(leftAlignFormat,footBallClub.getClubName1(), ((FootBallClub) footBallClub).getNoOfMatches(),((FootBallClub) footBallClub).getWins(),
+                count++;
+                System.out.format(leftAlignFormat,count,footBallClub.getClubName1(), ((FootBallClub) footBallClub).getNoOfMatches(),((FootBallClub) footBallClub).getWins(),
                         ((FootBallClub) footBallClub).getDraws(),((FootBallClub) footBallClub).getDefeats(),((FootBallClub) footBallClub).getScored(),
                         ((FootBallClub) footBallClub).getNoOfGoals(),((FootBallClub) footBallClub).getGoalDifference(),((FootBallClub) footBallClub).getNoOfPoints());
             }
-            System.out.format("+-----------------+--------+------+--------+-------+-------+-------+-------+--------+%n");
+            System.out.format("+----------+-----------------+--------+------+--------+-------+-------+-------+-------+--------+%n");
 
 
             if(matches.size()>0){

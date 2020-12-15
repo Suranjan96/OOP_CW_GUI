@@ -94,7 +94,7 @@ public class GUI extends Application {
         pane.getChildren().add(label = new Label("Ranking Table"));         //add label
        label.setTextFill(Color.web("#ffffff", 1));
        pane.setStyle("-fx-background-image: url(img2.jpg);"+"-fx-background-repeat: stretch;"+          //set background picture for this window
-               "-fx-background-size: 1000 800;"+
+               "-fx-background-size: 1080 800;"+
                "-fx-background-position: center center;");
         //pane.setStyle("-fx-background-color: #936ab7;");
         Font font = Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30);
@@ -107,9 +107,12 @@ public class GUI extends Application {
 
         TableView<SportsClub> table = new TableView<SportsClub>();                    //create table
         final ObservableList<SportsClub> data = FXCollections.observableArrayList(PremierLeagueManager.premierLeague);       //getting data to table from sport class in premier league array list
-        /*TableColumn position = new TableColumn("Position");
-        position.setCellValueFactory(new PropertyValueFactory("position"));
-        position.setPrefWidth(80);*/
+        int count =0;
+        count++;
+        TableColumn position = new TableColumn("Position");
+        position.setCellValueFactory(new PropertyValueFactory("count"));
+        position.setSortable(false);
+        position.setPrefWidth(80);
 
 
         TableColumn name = new TableColumn("Club Name");                    //add all data columns by columns
@@ -169,11 +172,11 @@ public class GUI extends Application {
         //Adding data to the table
         table.setItems(data);
        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-       table.getColumns().addAll(name, played, won, drawn, lost, goalFor, goalAgainst, gaolDiffernce, points);
+       table.getColumns().addAll(position,name, played, won, drawn, lost, goalFor, goalAgainst, gaolDiffernce, points);
 
         //Setting the size of the table
         table.setFixedCellSize(40);
-        table.setMaxSize(866, 400);
+        table.setMaxSize(946, 400);
 
         VBox vbox;
         pane.getChildren().add(vbox = new VBox());
@@ -261,7 +264,7 @@ public class GUI extends Application {
 
         });
 
-       scene = new Scene(pane, 1000, 800);
+       scene = new Scene(pane, 1080, 800);
        stage.setResizable(false);
        stage.setScene(scene);
        stage.show();
