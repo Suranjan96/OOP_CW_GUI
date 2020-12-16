@@ -1,6 +1,7 @@
 import javafx.application.Application;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -120,9 +121,9 @@ public class Main {
             } while (!nameCheck);
 
             System.out.println("\nSuccessfully "+clubName1 +" club added to the Premier League");     //prompt message
-            SportsClub footballClub = new FootBallClub(clubName1,"",location,foundedYear,0,0,0,0,0,0,0,0,"");   //pass data to the constructor
+            SportsClub footballClub = new FootBallClub(clubName1,"",location,foundedYear,0,0,0,0,0,0,0,0,0,"");   //pass data to the constructor
             premierLeagueManager.createNewClub(footballClub);    //call to the create method in premier league class
-
+            position();
         }else if(PremierLeagueManager.premierLeague.size()==20) {      //maximum length is 20
             System.out.println("No free slots are available to register!");
         }
@@ -251,7 +252,7 @@ public class Main {
                     scored1 = ((FootBallClub) footBallClub).getScored()+team1Scored;
                     playedMatches1=((FootBallClub) footBallClub).getNoOfMatches()+1;
                     goalDifference1 =scored1-noOfGoals1;
-                    SportsClub footballClub1 = new FootBallClub(clubName1,"",location,foundedYear,wins1,draws1,defeats1,noOfGoals1,scored1,noOfPoints1,playedMatches1, goalDifference1,date);     //pass the object to the constructor
+                    SportsClub footballClub1 = new FootBallClub(clubName1,"",location,foundedYear,0,wins1,draws1,defeats1,noOfGoals1,scored1,noOfPoints1,playedMatches1, goalDifference1,date);     //pass the object to the constructor
                     PremierLeagueManager.premierLeague.set(a,footballClub1);         //set the first team object to the relevant index number
 
 
@@ -278,13 +279,14 @@ public class Main {
                     scored2 = ((FootBallClub) footBallClub).getScored()+team2Scored;
                     playedMatches2=((FootBallClub) footBallClub).getNoOfMatches()+1;
                     goalDifference2 =scored2-noOfGoals2;
-                    SportsClub footballClub2 = new FootBallClub(clubName2,"",location,foundedYear,wins2,draws2,defeats2,noOfGoals2,scored2,noOfPoints2,playedMatches2, goalDifference2,date);
+                    SportsClub footballClub2 = new FootBallClub(clubName2,"",location,foundedYear,0,wins2,draws2,defeats2,noOfGoals2,scored2,noOfPoints2,playedMatches2, goalDifference2,date);
                     PremierLeagueManager.premierLeague.set(b,footballClub2);         //set the second team object to the relevant index number
 
                 }
             }
-            SportsClub playedMatch1 = new FootBallClub(clubName1,clubName2,"","",0,0,0,team1Scored,team2Scored,0,0,0,date);   //pass the matches details to the constructor
+            SportsClub playedMatch1 = new FootBallClub(clubName1,clubName2,"","",0,0,0,0,team1Scored,team2Scored,0,0,0,date);   //pass the matches details to the constructor
             premierLeagueManager.addPlayedMatch(playedMatch1);
+            position();
         }
         else {
             System.out.println("There are no two football clubs to add scored and date!");          //prompt message the are no football clubs
@@ -353,7 +355,7 @@ public class Main {
                     scored1 = ((FootBallClub) footBallClub).getScored()+team1Scored;
                     playedMatches1=((FootBallClub) footBallClub).getNoOfMatches()+1;
                     goalDifference1 =scored1-noOfGoals1;
-                    SportsClub footballClub1 = new FootBallClub(clubName1,"",location,foundedYear,wins1,draws1,defeats1,noOfGoals1,scored1,noOfPoints1,playedMatches1, goalDifference1,date);     //pass the object to the constructor
+                    SportsClub footballClub1 = new FootBallClub(clubName1,"",location,foundedYear,0,wins1,draws1,defeats1,noOfGoals1,scored1,noOfPoints1,playedMatches1, goalDifference1,date);     //pass the object to the constructor
                     PremierLeagueManager.premierLeague.set(PremierLeagueManager.premierLeague.indexOf(footBallClub),footballClub1);         //set the first team object to the relevant index number
 
 
@@ -380,16 +382,24 @@ public class Main {
                     scored2 = ((FootBallClub) footBallClub).getScored()+team2Scored;
                     playedMatches2=((FootBallClub) footBallClub).getNoOfMatches()+1;
                     goalDifference2 =scored2-noOfGoals2;
-                    SportsClub footballClub2 = new FootBallClub(clubName2,"",location,foundedYear,wins2,draws2,defeats2,noOfGoals2,scored2,noOfPoints2,playedMatches2, goalDifference2,date);
+                    SportsClub footballClub2 = new FootBallClub(clubName2,"",location,foundedYear,0,wins2,draws2,defeats2,noOfGoals2,scored2,noOfPoints2,playedMatches2, goalDifference2,date);
                     PremierLeagueManager.premierLeague.set(PremierLeagueManager.premierLeague.indexOf(footBallClub),footballClub2);         //set the second team object to the relevant index number
                 }
             }
-            SportsClub playedMatch1 = new FootBallClub(clubName1,clubName2,"","",0,0,0,team1Scored,team2Scored,0,0,0,date);   //pass the matches details to the constructor
+            SportsClub playedMatch1 = new FootBallClub(clubName1,clubName2,"","",0,0,0,0,team1Scored,team2Scored,0,0,0,date);   //pass the matches details to the constructor
             premierLeagueManager.addPlayedMatch(playedMatch1);
+            position();
         }
     }
 
+    public static void position(){
+        PremierLeagueManager.premierLeague.sort(Collections.reverseOrder());
+        for (SportsClub count : PremierLeagueManager.premierLeague){
+            SportsClub footballClub1 = new FootBallClub( count.getClubName1(),"",count.getLocation(),count.getFoundedYear(),PremierLeagueManager.premierLeague.indexOf(count)+1,((FootBallClub) count).getWins(),((FootBallClub) count).getDraws(),((FootBallClub) count).getDefeats(),((FootBallClub) count).getNoOfGoals(),((FootBallClub) count).getScored(),((FootBallClub) count).getNoOfPoints(),((FootBallClub) count).getNoOfMatches(),((FootBallClub) count).getGoalDifference(),"");   //pass data to the constructor
+            PremierLeagueManager.premierLeague.set(PremierLeagueManager.premierLeague.indexOf(count),footballClub1);
+        }
 
+    }
 
 
 }

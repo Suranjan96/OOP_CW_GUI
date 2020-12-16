@@ -33,7 +33,9 @@ public class PremierLeagueManager implements LeagueManager  {
                         System.out.println("> Scored            : " + ((FootBallClub) footBallClub).getScored());
                         System.out.println("> Goal Difference   : " + ((FootBallClub) footBallClub).getGoalDifference());
                         System.out.println("> Number of Points  : " + ((FootBallClub) footBallClub).getNoOfPoints());
+                        System.out.println("\n Successfully deleted "+clubName +" club!!!");
                         premierLeague.remove(footBallClub);
+                        Main.position();
                         nameCheck = true;
                         break;
                     } else {
@@ -125,7 +127,7 @@ public class PremierLeagueManager implements LeagueManager  {
             int count =0;
             for (SportsClub footBallClub : premierLeague) {
                 count++;
-                System.out.format(leftAlignFormat,count,footBallClub.getClubName1(), ((FootBallClub) footBallClub).getNoOfMatches(),((FootBallClub) footBallClub).getWins(),
+                System.out.format(leftAlignFormat,footBallClub.getPosition(),footBallClub.getClubName1(), ((FootBallClub) footBallClub).getNoOfMatches(),((FootBallClub) footBallClub).getWins(),
                         ((FootBallClub) footBallClub).getDraws(),((FootBallClub) footBallClub).getDefeats(),((FootBallClub) footBallClub).getScored(),
                         ((FootBallClub) footBallClub).getNoOfGoals(),((FootBallClub) footBallClub).getGoalDifference(),((FootBallClub) footBallClub).getNoOfPoints());
             }

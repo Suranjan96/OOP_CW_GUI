@@ -107,12 +107,12 @@ public class GUI extends Application {
 
         TableView<SportsClub> table = new TableView<SportsClub>();                    //create table
         final ObservableList<SportsClub> data = FXCollections.observableArrayList(PremierLeagueManager.premierLeague);       //getting data to table from sport class in premier league array list
-        int count =0;
-        count++;
+
         TableColumn position = new TableColumn("Position");
-        position.setCellValueFactory(new PropertyValueFactory("count"));
+        position.setCellValueFactory(new PropertyValueFactory("position"));
         position.setSortable(false);
         position.setPrefWidth(80);
+        position.setStyle( "-fx-alignment: CENTER;");
 
 
         TableColumn name = new TableColumn("Club Name");                    //add all data columns by columns
@@ -291,17 +291,6 @@ public class GUI extends Application {
         ChoiceBox<String> choiceBox = new ChoiceBox();              //selecting to search date and club name
         choiceBox.getItems().addAll("Date", "Home Team","Away Team");
         choiceBox.setValue("Date");
-
-        /*final DatePicker datePicker = new DatePicker();
-        // Make the DatePicker non-editable
-        datePicker.setEditable(false);
-        datePicker.setPrefHeight(50);
-        datePicker.setPrefWidth(150);
-        datePicker.setLayoutX(750);
-        datePicker.setLayoutY(25);
-        datePicker.setStyle("-fx-font-size: 16;"+"-fx-font-weight: bold;"+"-fx-background-radius: 50px;");
-        pane.getChildren().add(datePicker);
-        // Print the new date in the TextArea*/
 
         TableView<SportsClub> table = new TableView<SportsClub>();            //table data type is super class that sportclub class
         final ObservableList<SportsClub> data1 = FXCollections.observableArrayList(PremierLeagueManager.matches);

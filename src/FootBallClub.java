@@ -11,8 +11,8 @@ public  class FootBallClub extends SportsClub implements Comparable<FootBallClub
     private int goalDifference;
     private String date;
 
-    public FootBallClub(String clubName1, String clubName2, String location, String foundedYear, int wins, int draws, int defeats, int noOfGoals, int scored, int noOfPoints, int noOfMatches, int goalDifference, String date) {
-        super(clubName1, clubName2, location, foundedYear);
+    public FootBallClub(String clubName1, String clubName2, String location, String foundedYear, int position, int wins, int draws, int defeats, int noOfGoals, int scored, int noOfPoints, int noOfMatches, int goalDifference, String date) {
+        super(clubName1, clubName2, location, foundedYear, position);
         this.wins = wins;
         this.draws = draws;
         this.defeats = defeats;
@@ -23,7 +23,6 @@ public  class FootBallClub extends SportsClub implements Comparable<FootBallClub
         this.goalDifference = goalDifference;
         this.date = date;
     }
-
     public int getWins() {
         return wins;
     }

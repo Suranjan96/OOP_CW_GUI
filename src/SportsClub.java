@@ -5,12 +5,14 @@ public class SportsClub implements Serializable {
     private String clubName2;
     private String location;
     private String foundedYear;
+    private int position;
 
-    public SportsClub(String clubName1, String clubName2, String location, String foundedYear) {
+    public SportsClub(String clubName1, String clubName2, String location, String foundedYear, int position) {
         this.clubName1 = clubName1;
         this.clubName2 = clubName2;
         this.location = location;
         this.foundedYear = foundedYear;
+        this.position = position;
     }
 
     public String getClubName1() {
@@ -43,6 +45,14 @@ public class SportsClub implements Serializable {
 
     public void setFoundedYear(String foundedYear) {
         this.foundedYear = foundedYear;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public static boolean clubChecker(String clubName){      //duplicate club names checking
